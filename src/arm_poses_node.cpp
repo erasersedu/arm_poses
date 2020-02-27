@@ -27,6 +27,8 @@ void armVerticalCallback(const std_msgs::Bool::ConstPtr& msg)
 	  if (!arm.move()) {
 	    ROS_WARN("Could not move to prepare pose");
 	  }
+
+	  delete arm;
   }
 }
 
@@ -62,6 +64,8 @@ void armFrontCallback(const std_msgs::Bool::ConstPtr& msg)
 	  if (!arm.move()) {
 	    ROS_WARN("Could not move to prepare pose");
 	  }
+
+	  delete arm;
   }
 }
 
