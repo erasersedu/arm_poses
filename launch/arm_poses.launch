@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- 
+  Source:
+
+  source <path_to_folder>/crane_plus_ws/devel/setup.bash
+  source <path_to_folder>/dynamixel_ws/devel/setup.bash
+
+  -->
+ 
+  <include file="$(find crane_plus_hardware)/launch/start_arm_standalone.launch" />
+
+  <include file="$(find turtlebot_teleop)/launch/move_group.launch" />
+
+  <node name="arm_poses_node" pkg="arm_poses" type="arm_poses_node" respawn="true" output="screen"/>
+
+  <!--include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch" /-->
+
+</launch>
