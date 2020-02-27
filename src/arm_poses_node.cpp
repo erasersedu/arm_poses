@@ -6,8 +6,6 @@
 #include <actionlib/client/simple_action_client.h>
 #include <control_msgs/GripperCommandAction.h>
 
-moveit::planning_interface::MoveGroupInterface arm("arm");
-
 void armVerticalCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   if (msg->data)
@@ -15,7 +13,7 @@ void armVerticalCallback(const std_msgs::Bool::ConstPtr& msg)
 	  ros::AsyncSpinner spinner(2);
 	  spinner.start();
 
-	  //moveit::planning_interface::MoveGroupInterface arm("arm");
+	  moveit::planning_interface::MoveGroupInterface arm("arm");
 
 	  //motion planning
 	  arm.setPoseReferenceFrame("base_link");
@@ -39,7 +37,7 @@ void armFrontCallback(const std_msgs::Bool::ConstPtr& msg)
 	  ros::AsyncSpinner spinner(2);
 	  spinner.start();
 
-	  //moveit::planning_interface::MoveGroupInterface arm("arm");
+	  moveit::planning_interface::MoveGroupInterface arm("arm");
 
 	  //motion planning
 	  arm.setPoseReferenceFrame("base_link");
