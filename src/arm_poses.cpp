@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
   ROS_INFO("Closing gripper");
   goal.command.position = 0.015;
   gripper.sendGoal(goal);
-  gripper.waitForResult(ros::Duration(30));
+  finishedBeforeTimeout = gripper.waitForResult(ros::Duration(30));
   if (!finishedBeforeTimeout) {
     ROS_WARN("Gripper close action did not complete");
     return 1;

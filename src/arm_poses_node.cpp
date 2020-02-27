@@ -85,7 +85,6 @@ void gripperOpenCallback(const std_msgs::Bool::ConstPtr& msg)
 	  bool finishedBeforeTimeout = gripper.waitForResult(ros::Duration(30));
 	  if (!finishedBeforeTimeout) {
 	    ROS_WARN("Gripper open action did not complete");
-	    return 1;
 	  }
   }
 }
@@ -104,12 +103,12 @@ void gripperCloseCallback(const std_msgs::Bool::ConstPtr& msg)
 	  gripper.waitForServer();
 
 	  ROS_INFO("Closing gripper");
+	  control_msgs::GripperCommandGoal goal;
 	  goal.command.position = 0.015;
 	  gripper.sendGoal(goal);
-	  gripper.waitForResult(ros::Duration(30));
+	  bool finishedBeforeTimeout = gripper.waitForResult(ros::Duration(30));
 	  if (!finishedBeforeTimeout) {
 	    ROS_WARN("Gripper close action did not complete");
-	    return 1;
 	  }
   }
 }
