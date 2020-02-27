@@ -43,7 +43,7 @@ void armFrontCallback(const std_msgs::Bool::ConstPtr& msg)
 	  arm.setPoseReferenceFrame("base_link");
 
 	  arm.setGoalOrientationTolerance(0.1); //double tolerance
-	  arm.setGoalPositionTolerance(0.05); //double tolerance
+	  arm.setGoalPositionTolerance(0.2); //double tolerance
 	  arm.setNumPlanningAttempts(10); //unsigned int num_planning_attempts
 	  arm.setPlanningTime(10.0); //double seconds
 
