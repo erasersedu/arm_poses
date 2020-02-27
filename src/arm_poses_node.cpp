@@ -6,29 +6,13 @@
 #include <actionlib/client/simple_action_client.h>
 #include <control_msgs/GripperCommandAction.h>
 
+bool vertical = false, front = false;
+
 void armVerticalCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   if (msg->data)
   {
-	  ros::AsyncSpinner spinner(2);
-	  spinner.start();
-
-	  moveit::planning_interface::MoveGroupInterface arm("arm");
-
-	  //motion planning
-	  arm.setPoseReferenceFrame("base_link");
-
-	  arm.setGoalOrientationTolerance(0.1); //double tolerance
-	  arm.setGoalPositionTolerance(0.05); //double tolerance
-	  arm.setNumPlanningAttempts(10); //unsigned int num_planning_attempts
-	  arm.setPlanningTime(10.0); //double seconds
-
-	  arm.setNamedTarget("vertical");
-	  if (!arm.move()) {
-	    ROS_WARN("Could not move to prepare pose");
-	  }
-
-	  delete arm;
+	vertical = true;
   }
 }
 
@@ -36,36 +20,7 @@ void armFrontCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   if (msg->data)
   {
-	  ros::AsyncSpinner spinner(2);
-	  spinner.start();
-
-	  moveit::planning_interface::MoveGroupInterface arm("arm");
-
-	  //motion planning
-	  arm.setPoseReferenceFrame("base_link");
-
-	  arm.setGoalOrientationTolerance(0.1); //double tolerance
-	  arm.setGoalPositionTolerance(0.2); //double tolerance
-	  arm.setNumPlanningAttempts(10); //unsigned int num_planning_attempts
-	  arm.setPlanningTime(10.0); //double seconds
-
-	  ROS_INFO("Moving to prepare pose");
-	  geometry_msgs::PoseStamped pose;
-	  pose.header.frame_id = "base_link";
-	  pose.pose.position.x = 0.1;
-	  pose.pose.position.y = 0.0;
-	  pose.pose.position.z = 0.2;
-	  pose.pose.orientation.x = 0.0;
-	  pose.pose.orientation.y = 0.707106;
-	  pose.pose.orientation.z = 0.0;
-	  pose.pose.orientation.w = 0.707106;
-
-	  arm.setPoseTarget(pose);
-	  if (!arm.move()) {
-	    ROS_WARN("Could not move to prepare pose");
-	  }
-
-	  delete arm;
+	front = true;
   }
 }
 
@@ -128,7 +83,59 @@ int main(int argc, char **argv)
   ros::Subscriber sub2 = n2.subscribe("/arm_gripper_open", 1, gripperOpenCallback);
   ros::Subscriber sub3 = n3.subscribe("/arm_gripper_close", 1, gripperCloseCallback);
 
-  ros::spin();
+  ros::AsyncSpinner spinner(2);
+  spinner.start();
+
+  moveit::planning_interface::MoveGroupInterface arm("arm");
+
+  //motion planning
+  arm.setPoseReferenceFrame("base_link");
+
+  while(true)
+  {
+	if (vertical == true)
+	{
+	  arm.setGoalOrientationTolerance(0.1); //double tolerance
+	  arm.setGoalPositionTolerance(0.05); //double tolerance
+	  arm.setNumPlanningAttempts(10); //unsigned int num_planning_attempts
+	  arm.setPlanningTime(10.0); //double seconds
+
+	  arm.setNamedTarget("vertical");
+	  if (!arm.move()) {
+	    ROS_WARN("Could not move to prepare pose");
+	  }
+
+	  vertical = false;
+	}
+
+	if (front == true)
+	{
+	  arm.setGoalOrientationTolerance(0.1); //double tolerance
+	  arm.setGoalPositionTolerance(0.2); //double tolerance
+	  arm.setNumPlanningAttempts(10); //unsigned int num_planning_attempts
+	  arm.setPlanningTime(10.0); //double seconds
+
+	  ROS_INFO("Moving to prepare pose");
+	  geometry_msgs::PoseStamped pose;
+	  pose.header.frame_id = "base_link";
+	  pose.pose.position.x = 0.1;
+	  pose.pose.position.y = 0.0;
+	  pose.pose.position.z = 0.2;
+	  pose.pose.orientation.x = 0.0;
+	  pose.pose.orientation.y = 0.707106;
+	  pose.pose.orientation.z = 0.0;
+	  pose.pose.orientation.w = 0.707106;
+
+	  arm.setPoseTarget(pose);
+	  if (!arm.move()) {
+	    ROS_WARN("Could not move to prepare pose");
+	  }
+
+	  front = false;
+	}
+
+  	ros::spin();
+  }
 
   return 0;
 }
