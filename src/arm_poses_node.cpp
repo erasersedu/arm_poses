@@ -28,8 +28,8 @@ void gripperOpenCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   if (msg->data)
   {
-	  ros::AsyncSpinner spinner(2);
-	  spinner.start();
+	  //ros::AsyncSpinner spinner(2);
+	  //spinner.start();
 
 	  //gripper
 	  actionlib::SimpleActionClient<control_msgs::GripperCommandAction> gripper(
@@ -52,8 +52,8 @@ void gripperCloseCallback(const std_msgs::Bool::ConstPtr& msg)
 {
   if (msg->data)
   {
-	  ros::AsyncSpinner spinner(2);
-	  spinner.start();
+	  //ros::AsyncSpinner spinner(2);
+	  //spinner.start();
 
 	  //gripper
 	  actionlib::SimpleActionClient<control_msgs::GripperCommandAction> gripper(
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 	  front = false;
 	}
 
-  	ros::spin();
+  	ros::spinOnce();
   }
 
   return 0;
