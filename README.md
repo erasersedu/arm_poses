@@ -27,3 +27,20 @@ https://github.com/erasersedu/third_party
 > catkin_make
 
 > source devel/setup.bash
+
+*
+
+# To Use It
+
+> roslaunch arm_poses arm_poses.launch
+
+
+Then, in other terminal/node
+
+> rostopic pub /arm_move_vertical Bool "data:true"
+
+> rostopic pub /arm_move_front Bool "data:true"
+
+> rostopic pub /arm_gripper_open Bool "data:true"
+
+> rostopic pub /arm_gripper_close Bool "data:true"
