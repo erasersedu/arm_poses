@@ -6,6 +6,13 @@ From: https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.h
 
 1. Install MoveIt:
 
+Ubuntu 16.04:
+
+> sudo apt-get install ros-melodic-moveit-*
+
+
+Ubuntu 18.04
+
 > sudo apt-get install ros-melodic-moveit-*
 
 
