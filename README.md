@@ -8,7 +8,7 @@ From: https://gbiggs.github.io/ros_moveit_rsj_tutorial/manipulators_and_moveit.h
 
 Ubuntu 16.04:
 
-> sudo apt-get install ros-melodic-moveit-*
+> sudo apt-get install ros-kinetic-moveit-*
 
 
 Ubuntu 18.04
